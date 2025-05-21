@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('光子信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>科技名：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>版本代码：</label>
+                                <input type="text" name="version"/>
+                            </li>
+                            <li>
+                                <label>版本名：</label>
+                                <input type="text" name="versionName"/>
+                            </li>
+                            <li>
+                                <label>所有用户启动次数统计：</label>
+                                <input type="text" name="allStartCount"/>
+                            </li>
+                            <li>
+                                <label>是否开启TG验证：</label>
+                                <input type="text" name="isStartTG"/>
+                            </li>
+                            <li>
+                                <label>TG验证的地址：</label>
+                                <input type="text" name="tgFilePath"/>
+                            </li>
+                            <li>
+                                <label>自瞄控件隐藏显示 0隐藏 1显示：</label>
+                                <input type="text" name="openAimAuto"/>
+                            </li>
+                            <li>
+                                <label>是否停用 0否 1是：</label>
+                                <input type="text" name="isDeactivated"/>
+                            </li>
+                            <li>
+                                <label>获取手机型号 0否 1是：</label>
+                                <input type="text" name="isUploading"/>
+                            </li>
+                            <li>
+                                <label>是否开启卡密验证 0否 1是：</label>
+                                <input type="text" name="isStartVerify"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:pubgentity:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:pubgentity:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:pubgentity:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:pubgentity:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:pubgentity:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:pubgentity:remove')}]];
+        var prefix = ctx + "system/pubgentity";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "光子信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'name',
+                    title: '科技名'
+                },
+                {
+                    field: 'version',
+                    title: '版本代码'
+                },
+                {
+                    field: 'updateContent',
+                    title: '更新内容'
+                },
+                {
+                    field: 'versionName',
+                    title: '版本名'
+                },
+                {
+                    field: 'allStartCount',
+                    title: '所有用户启动次数统计'
+                },
+                {
+                    field: 'isStartTG',
+                    title: '是否开启TG验证'
+                },
+                {
+                    field: 'tgFilePath',
+                    title: 'TG验证的地址'
+                },
+                {
+                    field: 'openAimAuto',
+                    title: '自瞄控件隐藏显示 0隐藏 1显示'
+                },
+                {
+                    field: 'isDeactivated',
+                    title: '是否停用 0否 1是'
+                },
+                {
+                    field: 'isUploading',
+                    title: '获取手机型号 0否 1是'
+                },
+                {
+                    field: 'isStartVerify',
+                    title: '是否开启卡密验证 0否 1是'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.name + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.name + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

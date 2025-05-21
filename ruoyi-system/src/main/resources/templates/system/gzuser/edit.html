@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改光子用户')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-gzuser-edit" th:object="${gzUser}">
+            <input name="deviceCode" th:field="*{deviceCode}" type="hidden">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">版本名：</label>
+                    <div class="col-sm-8">
+                        <input name="versionName" th:field="*{versionName}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选择的UI 0-旧UI 1-新UI：</label>
+                    <div class="col-sm-8">
+                        <input name="chooseUI" th:field="*{chooseUI}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">手机型号：</label>
+                    <div class="col-sm-8">
+                        <input name="deviceModel" th:field="*{deviceModel}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">启动次数：</label>
+                    <div class="col-sm-8">
+                        <input name="startTemp" th:field="*{startTemp}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">首次启动时间：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="firstTime" th:value="${#dates.format(gzUser.firstTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">最后一次打开时间：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="lastTime" th:value="${#dates.format(gzUser.lastTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">杂项信息：</label>
+                    <div class="col-sm-8">
+                        <textarea name="pubgInfoContent" class="form-control">[[*{pubgInfoContent}]]</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/gzuser";
+        $("#form-gzuser-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-gzuser-edit').serialize());
+            }
+        }
+
+        $("input[name='firstTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='lastTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

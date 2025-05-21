@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增光子信息')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-pubgentity-add">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">科技名：</label>
+                    <div class="col-sm-8">
+                        <input name="name" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">版本代码：</label>
+                    <div class="col-sm-8">
+                        <input name="version" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">更新内容：</label>
+                    <div class="col-sm-8">
+                        <textarea name="updateContent" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">版本名：</label>
+                    <div class="col-sm-8">
+                        <input name="versionName" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所有用户启动次数统计：</label>
+                    <div class="col-sm-8">
+                        <input name="allStartCount" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否开启TG验证：</label>
+                    <div class="col-sm-8">
+                        <input name="isStartTG" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">TG验证的地址：</label>
+                    <div class="col-sm-8">
+                        <input name="tgFilePath" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">自瞄控件隐藏显示 0隐藏 1显示：</label>
+                    <div class="col-sm-8">
+                        <input name="openAimAuto" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否停用 0否 1是：</label>
+                    <div class="col-sm-8">
+                        <input name="isDeactivated" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">获取手机型号 0否 1是：</label>
+                    <div class="col-sm-8">
+                        <input name="isUploading" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否开启卡密验证 0否 1是：</label>
+                    <div class="col-sm-8">
+                        <input name="isStartVerify" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/pubgentity"
+        $("#form-pubgentity-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-pubgentity-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

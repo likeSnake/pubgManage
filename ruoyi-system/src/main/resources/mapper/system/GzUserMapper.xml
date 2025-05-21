@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.GzUserMapper">
+    
+    <resultMap type="GzUser" id="GzUserResult">
+        <result property="deviceCode"    column="deviceCode"    />
+        <result property="versionName"    column="versionName"    />
+        <result property="chooseUI"    column="chooseUI"    />
+        <result property="deviceModel"    column="deviceModel"    />
+        <result property="startTemp"    column="startTemp"    />
+        <result property="firstTime"    column="firstTime"    />
+        <result property="lastTime"    column="lastTime"    />
+        <result property="pubgInfoContent"    column="pubgInfoContent"    />
+    </resultMap>
+
+    <sql id="selectGzUserVo">
+        select deviceCode, versionName, chooseUI, deviceModel, startTemp, firstTime, lastTime, pubgInfoContent from gzuser
+    </sql>
+
+    <select id="selectGzUserList" parameterType="GzUser" resultMap="GzUserResult">
+        <include refid="selectGzUserVo"/>
+        <where>  
+            <if test="versionName != null  and versionName != ''"> and versionName like concat('%', #{versionName}, '%')</if>
+            <if test="chooseUI != null  and chooseUI != ''"> and chooseUI = #{chooseUI}</if>
+            <if test="deviceModel != null  and deviceModel != ''"> and deviceModel = #{deviceModel}</if>
+            <if test="startTemp != null "> and startTemp = #{startTemp}</if>
+            <if test="firstTime != null "> and firstTime = #{firstTime}</if>
+            <if test="lastTime != null "> and lastTime = #{lastTime}</if>
+            <if test="pubgInfoContent != null  and pubgInfoContent != ''"> and pubgInfoContent = #{pubgInfoContent}</if>
+        </where>
+    </select>
+    
+    <select id="selectGzUserByDeviceCode" parameterType="String" resultMap="GzUserResult">
+        <include refid="selectGzUserVo"/>
+        where deviceCode = #{deviceCode}
+    </select>
+
+    <insert id="insertGzUser" parameterType="GzUser">
+        insert into gzuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null">deviceCode,</if>
+            <if test="versionName != null">versionName,</if>
+            <if test="chooseUI != null">chooseUI,</if>
+            <if test="deviceModel != null">deviceModel,</if>
+            <if test="startTemp != null">startTemp,</if>
+            <if test="firstTime != null">firstTime,</if>
+            <if test="lastTime != null">lastTime,</if>
+            <if test="pubgInfoContent != null">pubgInfoContent,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null">#{deviceCode},</if>
+            <if test="versionName != null">#{versionName},</if>
+            <if test="chooseUI != null">#{chooseUI},</if>
+            <if test="deviceModel != null">#{deviceModel},</if>
+            <if test="startTemp != null">#{startTemp},</if>
+            <if test="firstTime != null">#{firstTime},</if>
+            <if test="lastTime != null">#{lastTime},</if>
+            <if test="pubgInfoContent != null">#{pubgInfoContent},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGzUser" parameterType="GzUser">
+        update gzuser
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="versionName != null">versionName = #{versionName},</if>
+            <if test="chooseUI != null">chooseUI = #{chooseUI},</if>
+            <if test="deviceModel != null">deviceModel = #{deviceModel},</if>
+            <if test="startTemp != null">startTemp = #{startTemp},</if>
+            <if test="firstTime != null">firstTime = #{firstTime},</if>
+            <if test="lastTime != null">lastTime = #{lastTime},</if>
+            <if test="pubgInfoContent != null">pubgInfoContent = #{pubgInfoContent},</if>
+        </trim>
+        where deviceCode = #{deviceCode}
+    </update>
+
+    <delete id="deleteGzUserByDeviceCode" parameterType="String">
+        delete from gzuser where deviceCode = #{deviceCode}
+    </delete>
+
+    <delete id="deleteGzUserByDeviceCodes" parameterType="String">
+        delete from gzuser where deviceCode in 
+        <foreach item="deviceCode" collection="array" open="(" separator="," close=")">
+            #{deviceCode}
+        </foreach>
+    </delete>
+
+</mapper>
