@@ -7,17 +7,17 @@ import com.ruoyi.system.domain.pubgManage;
  * 光子版本信息Mapper接口
  * 
  * @author jcl
- * @date 2025-05-21
+ * @date 2025-05-22
  */
 public interface pubgManageMapper 
 {
     /**
      * 查询光子版本信息
      * 
-     * @param name 光子版本信息主键
+     * @param id 光子版本信息主键
      * @return 光子版本信息
      */
-    public pubgManage selectpubgManageByName(String name);
+    public pubgManage selectpubgManageById(Long id);
 
     /**
      * 查询光子版本信息列表
@@ -46,16 +46,16 @@ public interface pubgManageMapper
     /**
      * 删除光子版本信息
      * 
-     * @param name 光子版本信息主键
+     * @param id 光子版本信息主键
      * @return 结果
      */
-    public int deletepubgManageByName(String name);
+    public int deletepubgManageById(Long id);
 
     /**
      * 批量删除光子版本信息
      * 
-     * @param names 需要删除的数据主键集合
+     * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deletepubgManageByNames(String[] names);
+    public int deletepubgManageByIds(String[] ids);
 }

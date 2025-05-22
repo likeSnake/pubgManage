@@ -9,11 +9,14 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 光子版本信息对象 pubgentity
  * 
  * @author jcl
- * @date 2025-05-21
+ * @date 2025-05-22
  */
 public class pubgManage extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
+
+    /**  */
+    private Long id;
 
     /** 科技名 */
     @Excel(name = "科技名")
@@ -58,6 +61,16 @@ public class pubgManage extends BaseEntity
     /** 是否开启卡密验证 0否 1是 */
     @Excel(name = "是否开启卡密验证 0否 1是")
     private Long isStartVerify;
+
+    public void setId(Long id) 
+    {
+        this.id = id;
+    }
+
+    public Long getId() 
+    {
+        return id;
+    }
 
     public void setName(String name) 
     {
@@ -172,6 +185,7 @@ public class pubgManage extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
             .append("name", getName())
             .append("version", getVersion())
             .append("updateContent", getUpdateContent())

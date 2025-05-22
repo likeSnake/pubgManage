@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 光子版本信息Controller
  * 
  * @author jcl
- * @date 2025-05-21
+ * @date 2025-05-22
  */
 @Controller
 @RequestMapping("/system/pubgManage")
@@ -94,10 +94,10 @@ public class pubgManageController extends BaseController
      * 修改光子版本信息
      */
     @RequiresPermissions("system:pubgManage:edit")
-    @GetMapping("/edit/{name}")
-    public String edit(@PathVariable("name") String name, ModelMap mmap)
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
-        pubgManage pubgManage = pubgManageService.selectpubgManageByName(name);
+        pubgManage pubgManage = pubgManageService.selectpubgManageById(id);
         mmap.put("pubgManage", pubgManage);
         return prefix + "/edit";
     }
@@ -123,6 +123,6 @@ public class pubgManageController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(pubgManageService.deletepubgManageByNames(ids));
+        return toAjax(pubgManageService.deletepubgManageByIds(ids));
     }
 }

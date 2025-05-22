@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.system.mapper.pubgManageMapper">
     
     <resultMap type="pubgManage" id="pubgManageResult">
+        <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="version"    column="version"    />
         <result property="updateContent"    column="updateContent"    />
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectpubgManageVo">
-        select name, version, updateContent, versionName, allStartCount, isStartTG, tgFilePath, openAimAuto, isDeactivated, isUploading, isStartVerify from pubgentity
+        select id, name, version, updateContent, versionName, allStartCount, isStartTG, tgFilePath, openAimAuto, isDeactivated, isUploading, isStartVerify from pubgentity
     </sql>
 
     <select id="selectpubgManageList" parameterType="pubgManage" resultMap="pubgManageResult">
@@ -39,12 +40,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectpubgManageByName" parameterType="String" resultMap="pubgManageResult">
+    <select id="selectpubgManageById" parameterType="Long" resultMap="pubgManageResult">
         <include refid="selectpubgManageVo"/>
-        where name = #{name}
+        where id = #{id}
     </select>
 
-    <insert id="insertpubgManage" parameterType="pubgManage">
+    <insert id="insertpubgManage" parameterType="pubgManage" useGeneratedKeys="true" keyProperty="id">
         insert into pubgentity
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">name,</if>
@@ -77,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updatepubgManage" parameterType="pubgManage">
         update pubgentity
         <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
             <if test="version != null">version = #{version},</if>
             <if test="updateContent != null">updateContent = #{updateContent},</if>
             <if test="versionName != null">versionName = #{versionName},</if>
@@ -88,17 +90,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isUploading != null">isUploading = #{isUploading},</if>
             <if test="isStartVerify != null">isStartVerify = #{isStartVerify},</if>
         </trim>
-        where name = #{name}
+        where id = #{id}
     </update>
 
-    <delete id="deletepubgManageByName" parameterType="String">
-        delete from pubgentity where name = #{name}
+    <delete id="deletepubgManageById" parameterType="Long">
+        delete from pubgentity where id = #{id}
     </delete>
 
-    <delete id="deletepubgManageByNames" parameterType="String">
-        delete from pubgentity where name in 
-        <foreach item="name" collection="array" open="(" separator="," close=")">
-            #{name}
+    <delete id="deletepubgManageByIds" parameterType="String">
+        delete from pubgentity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 

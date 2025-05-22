@@ -12,7 +12,7 @@ import com.ruoyi.common.core.text.Convert;
  * 光子版本信息Service业务层处理
  * 
  * @author jcl
- * @date 2025-05-21
+ * @date 2025-05-22
  */
 @Service
 public class pubgManageServiceImpl implements IpubgManageService 
@@ -23,13 +23,13 @@ public class pubgManageServiceImpl implements IpubgManageService
     /**
      * 查询光子版本信息
      * 
-     * @param name 光子版本信息主键
+     * @param id 光子版本信息主键
      * @return 光子版本信息
      */
     @Override
-    public pubgManage selectpubgManageByName(String name)
+    public pubgManage selectpubgManageById(Long id)
     {
-        return pubgManageMapper.selectpubgManageByName(name);
+        return pubgManageMapper.selectpubgManageById(id);
     }
 
     /**
@@ -71,24 +71,24 @@ public class pubgManageServiceImpl implements IpubgManageService
     /**
      * 批量删除光子版本信息
      * 
-     * @param names 需要删除的光子版本信息主键
+     * @param ids 需要删除的光子版本信息主键
      * @return 结果
      */
     @Override
-    public int deletepubgManageByNames(String names)
+    public int deletepubgManageByIds(String ids)
     {
-        return pubgManageMapper.deletepubgManageByNames(Convert.toStrArray(names));
+        return pubgManageMapper.deletepubgManageByIds(Convert.toStrArray(ids));
     }
 
     /**
      * 删除光子版本信息信息
      * 
-     * @param name 光子版本信息主键
+     * @param id 光子版本信息主键
      * @return 结果
      */
     @Override
-    public int deletepubgManageByName(String name)
+    public int deletepubgManageById(Long id)
     {
-        return pubgManageMapper.deletepubgManageByName(name);
+        return pubgManageMapper.deletepubgManageById(id);
     }
 }
